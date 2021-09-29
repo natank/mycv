@@ -1,9 +1,9 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 import { Expose } from 'class-transformer';
-import { IUser } from '../../Interfaces/user.interface';
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IUser } from 'src/Interfaces/user.interface';
+import { CreateUserReqDto } from './create-user.req.dto';
 
-export class CreateUserReqDto implements IUser {
-  @IsNotEmpty()
+export class SigninReqDto implements IUser {
   @IsEmail()
   mail: string;
 

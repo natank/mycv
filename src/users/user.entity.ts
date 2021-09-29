@@ -1,3 +1,4 @@
+import { IUser } from 'src/Interfaces/user.interface';
 import {
   Entity,
   Column,
@@ -8,9 +9,10 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class User {
+export class User implements IUser {
   @PrimaryGeneratedColumn()
   id: number;
+
   @Column()
   email: string;
 
