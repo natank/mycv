@@ -21,6 +21,7 @@ import { Serialize } from '../interceptors/serialize.interceptor';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { User } from './user.entity';
 import { AuthGuard } from '../guards/auth.guard';
+import { classToPlain, plainToClass } from 'class-transformer';
 
 @Controller('auth')
 export class UsersController {
@@ -35,10 +36,9 @@ export class UsersController {
     return user;
   }
 
-  @Serialize(CreateUserReqDto)
   @Post('/signup')
   async createUser(
-    @Body() body: CreateUserReqDto,
+    @Body() body: CreateUserReqDto, // body has already been transformed
     @Session() session: any,
   ): Promise<CreateUserResDto> {
     try {
@@ -49,8 +49,10 @@ export class UsersController {
         CreateUserResDto,
         userEntity,
       );
-
-      return createUserResDto;
+      const res: CreateUserResDto = classToPlain(createUserResDto, {
+        excludeExtraneousValues: true,
+      }) as CreateUserResDto;
+      return res;
     } catch (error) {
       console.log(error);
       throw error;
