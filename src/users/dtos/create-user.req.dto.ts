@@ -12,6 +12,7 @@ export class CreateUserReqDto implements IUser {
 
   id: number;
 
+  /** Only these exposed properties will be included in the object received by the controller */
   @Expose()
   get email() {
     return this.mail;
